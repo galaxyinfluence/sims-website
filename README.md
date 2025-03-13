@@ -13,6 +13,6 @@ Navigator is owned under the Fluxius Technologies ROBLOX group. This respatory i
 - Portal for adminsitrators to change student details, delete accounts, suspened accounts, change timetables etc
 
 > ### Cost
-- Navigator Basic - Only includeds the roblox in-game UI (£5.00 per school, lifeitme subscription)
+> - Navigator Basic - Only includeds the roblox in-game UI (£5.00 per school, lifeitme subscription)
 
-- Navigator Cloud - Includes everything in Navigator Basic plus the website dashboard for your school (£5.00 per month or £45 per year which gives 3 months free)
+> - Navigator Cloud - Includes everything in Navigator Basic plus the website dashboard for your school (£5.00 per month or £45 per year which gives 3 months free)
