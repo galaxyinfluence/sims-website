@@ -15,3 +15,4 @@ Navigator is owned under the Fluxius Technologies ROBLOX group. This respatory i
 > ### Cost
 > - Navigator Basic - Only includeds the roblox in-game UI (£5.00 per school, lifeitme subscription)
 > - Navigator Cloud - Includes everything in Navigator Basic plus the website dashboard for your school (£5.00 per month or £45 per year which gives 3 months free)
+> - Navigator Custom - Require custom features? Want our developers to add speical features that only your school SIMS has? Then Navigator Custom is right for you inlcuding sub-domain support (i.e yourschool.navigatorroblox.com) for £15.00 per month or £135 per year with 3 months free)
