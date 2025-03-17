@@ -7,7 +7,9 @@ const crypto = require("crypto");
 const cookieParser = require("cookie-parser");
 const csurf = require("csurf");
 
-const port = 3000;
+require("dotenv").config()
+
+const port = 3001;
 
 const db = mysql.createPool({
   host: "host",
@@ -56,3 +58,22 @@ app.use((req, res, next) => {
     next();
   }
 });
+
+
+// routes
+app.get("/", (req, res) => {
+  res.render("index", { title: "Navigator SIMS" })
+});
+
+app.get("/home", (req, res) => {
+  if (!req.user) {
+    return res.redirect("/login");
+  }
+  res.render("dashboard", { title: "Naviagor | Dashboard", user: req.user });
+});
+
+app.get("/auth/login/discord", async (req, res) => {}
+       try {
+  const response = await axios.get("http://localhost.polyonax-group.org:3001/api/
+       }
+       });
