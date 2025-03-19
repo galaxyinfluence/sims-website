@@ -72,8 +72,53 @@ app.get("/home", (req, res) => {
   res.render("dashboard", { title: "Naviagor | Dashboard", user: req.user });
 });
 
-app.get("/auth/login/discord", async (req, res) => {}
-       try {
-  const response = await axios.get("http://localhost.polyonax-group.org:3001/api/
-       }
-       });
+app.get("/auth/login/discord", async (req, res) => {
+  const discordAuthUrl = process.ENV.DISCORD_AUTH_URL;
+  res.redirect(discordAuthUrl);
+});
+
+app.get("/api/auth/discord/callback", async (req, res); => {
+  const code = req.query.code;
+  if (!code) {
+    return res.redirect("/signup");
+  }
+
+  try {
+    const tokenResponse = await axios.post("https://discord.com/api/oauth2/token", new URLSearchParams({
+      client_id: process.env.DISCORD_AUTH_CLIENTID,
+      client_secret: process.env.DISCORD_AUTH_SECRET,
+      code: code,
+      grant_type: "authorization_code",
+      redirect_uri: process.env.DISCORD_AUTH_CALLBACK_URL
+    }), {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+    });
+
+    const accessToken = tokenResponse.data.access_token;
+
+    const discordUserResponse = await axios.get("https://discord.com/api/v10/users/@me", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    const discordId = discordUserResponse.data.id;
+    const username = discordUserResponse.data.username;
+    const discriminator = discordUserResponse.data.discriminator;
+
+    db.query("SELECT * FROM users WHERE discord_id =?", [discordId], (err, results) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.redirect("/signup");
+      }
+
+      if (results.length > 0) {
+        const sessionCookie = crypt.randomByte(32).toString("hex");
+
+        
+      }
+    }
+  }
+})
