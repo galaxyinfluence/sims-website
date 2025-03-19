@@ -117,6 +117,20 @@ app.get("/api/auth/discord/callback", async (req, res); => {
       if (results.length > 0) {
         const sessionCookie = crypt.randomByte(32).toString("hex");
 
+        db.query(
+          "UPDATE users SET username = ?, discord id=?, session_cookie = ?, WHERE discord_id = ?",
+          [username, discordId, sessionCookie, discordId],
+          (dbErr) => {
+            if (dbErr) {
+              console.error("Database error:", dbErr);
+              return res.redirect("/signup");
+            }
+
+            res.cookie("session_token", sessionCookie, {
+              maxAe: 24 * 60 * 60 * 1000,
+              httpOnly: true,
+              secure: process.env.NDE_ENV == "production",
+            }})
         
       }
     }
