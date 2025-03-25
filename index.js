@@ -71,14 +71,90 @@ app.get("/home", (req, res) => {
   res.render("dashboard", { title: "Navigator | Dashboard", user: req.user });
 });
 
-app.get("/auth/login/discord", async (req, res) => {
-  try {
-    const response = await axios.get("http://localhost.polyonax-group.org:3001/auth/discord/callback");
-    res.send(response.data);
-  } catch (error) {
-    console.error("Error during Discord login:", error);
-    res.status(500).send("Internal Server Error");
+app.get("/api/auth/discord/callback", async (req, res) => {
+  const code = req.query.code;
+  
+  if (!code) {
+    return res.redirect("/");
   }
+
+  try {
+    // Step 1: Exchange the authorization code for an access token
+    const tokenResponse = await axios.post(
+      "https://discord.com/api/oauth2/token", 
+      new URLSearchParams({
+        client_id: process.env.DISCORD_AUTH_CLIENTID,
+        client_secret: process.env.DISCORD_AUTH_SECRET,
+        code: code,
+        grant_type: "authorization_code",
+        redirect_uri: process.env.DISCORD_AUTH_CALLBACK_URL,
+        scope: 'identify openid',
+      }),
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+
+    const accessToken = tokenResponse.data.access_token;
+
+    // Step 2: Use the access token to fetch user data from Discord
+    const discordUserResponse = await axios.get("https://discord.com/api/v10/users/@me", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    const discordId = discordUserResponse.data.id;
+    const username = discordUserResponse.data.username;
+    const avatar = discordUserResponse.data.avatar;
+    const discriminator = discordUserResponse.data.discriminator;
+
+    const profilePicture = avatar 
+      ? `https://cdn.discordapp.com/avatars/${discordId}/${avatar}.png?size=256` 
+      : `https://cdn.discordapp.com/embed/avatars/${discriminator % 5}.png`;
+
+    // Step 3: Handle database query (ensure async/await is used for better readability)
+    const user = await db.query("SELECT * FROM users WHERE discord_id = ?", [discordId]);
+
+    const sessionCookie = crypto.randomBytes(32).toString("hex");
+
+    if (user.length > 0) {
+      // User exists, update their details
+      await db.query(
+        "UPDATE users SET username = ?, session_cookie = ?, profile_picture = ? WHERE discord_id = ?",
+        [username, sessionCookie, profilePicture, discordId]
+      );
+    } else {
+      // User does not exist, insert new user
+      await db.query(
+        "INSERT INTO users (username, discord_id, session_cookie, profile_picture) VALUES (?, ?, ?, ?)",
+        [username, discordId, sessionCookie, profilePicture]
+      );
+    }
+
+    // Step 4: Set the session cookie and redirect to dashboard
+    res.cookie("session_token", sessionCookie, {
+      maxAge: 24 * 60 * 60 * 1000,
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+    });
+    return res.redirect("/dashboard");
+
+  } catch (err) {
+    console.error("Error during Discord OAuth2 process:", err);
+    return res.redirect("/");  // In case of error, redirect to home
+  }
+});
+
+app.get("/auth/login/discord", async (req, res) => {
+  const discordAuthUrl = process.env.DISCORD_AUTH_URL;
+  res.redirect(discordAuthUrl);
+});
+
+app.get("/api/behavior/positive/add/", (req, res) => {
+  const { userid, amount, reason } = req.query;
 });
 
 app.listen(port, () => {
