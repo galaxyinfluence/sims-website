@@ -1,0 +1,113 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: url('/generalbackground.png') no-repeat center center/cover;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+#settings-container {
+    background-color: rgba(0,0,0,0.6);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+#linked-roblox-acc, #linked-discord-acc {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    flex-direction: column;
+}
+
+#linked-rblx-main, #linked-discord-main {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+#roblox-logo, #discord-logo {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: white;
+}
+
+#linkedrblx-acc-user, #linkeddiscord-acc-user {
+    flex-grow: 1;
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+#show-form-btn, #link-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-decoration: none;
+}
+
+#show-form-btn:hover, #link-btn:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+form#roblox-form {
+    display: none;
+    margin-top: 10px;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 6px;
+}
+
+#roblox-userid {
+    padding: 5px;
+    border-radius: 4px;
+    border: none;
+    margin-right: 5px;
+}
+
+button[type="submit"] {
+    background-color: rgba(255, 255, 255, 0.2);
+    border: none;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+button[type="submit"]:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+#linked-roblox-acc p, #linked-discord-acc p {
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    width: 100%;
+}
