@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/accsettings.css">
+</head>
+<body>
+    <div id="settings-container">
+        <h1>Settings</h1>
+        <div id="account_config">
+            <h3>Account Settings</h3>
+            
+            <p id="linked-roblox-title">Linked Roblox Account</p>
+            <div id="linked-roblox-acc">
+                <div id="linked-rblx-main">
+                    <img id="roblox-logo" src="/robloxlogo.png" alt="Roblox Logo">
+                    <p id="linkedrblx-acc-user"><%= robloxaccountusername %></p>
+                    <button id="show-form-btn">Link Account</button>
+                </div>
+                <form id="roblox-form" action="/api/settings/verify/roblox/bloxlink" method="POST" style="display: none;">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                    <label for="roblox-userid">Enter Roblox User ID:</label>
+                    <input type="text" id="roblox-userid" name="robloxUserId" required>
+                    <button type="submit">Submit</button>
+                </form>
+            </div>
+            
+            <p id="linked-discord-title">Linked Discord Account</p>
+            <div id="linked-discord-acc">
+                <div id="linked-discord-main">
+                    <img id="discord-logo" src="/discordlogo.png" alt="Discord Logo">
+                    <p id="linkeddiscord-acc-user"><%= discordaccountusername %></p>
+                    <a id="link-btn" href="/api/settings/verify/discord">Link Account</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById("show-form-btn").addEventListener("click", function() {
+            document.getElementById("roblox-form").style.display = "block";
+        });
+    </script>
+</body>
+</html>
