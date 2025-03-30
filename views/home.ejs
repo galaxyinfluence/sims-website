@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
+        <title><%= title %></title>
+        <link rel="stylesheet" href="/home.css">
+    </head>
+    <body>
+        <nav id="nav-bar">
+            <button id="side-bar-button"><img id="sidebar_image" href="/sidebar.png"></button>
+            <p>Naviagtor SIMS</p>
+            <div id="account">
+                <img id="discord-profile=pic" href="<%= DiscordProfilePicture %>">
+                <p><%= DiscordUsername %></p>
+                <button id="profile-dropdown"><img id=dropdown_image href="/dropdown.png"></button>
+            </div>
+        </nav>
+        <div id="Main">
+            <h3>Welcome</h3>
+            <a href="/inbox.ejs">Inbox</a>
+            <a href="/assignments.ejs">Set Assignments</a>
+            <a href="/behavior.ejs">Log Behavior</a>
+        </div>
+        <div id="UpcommingEvents">
+            <h3>Upcomming Events</h3>
+            <p>There are no upcomming events.</p>
+        </div>
+        <div id="TimeTable">
+            <table id="staff-timetable">
+
+            </table>
+        </div>
+    </body>
+</html>
