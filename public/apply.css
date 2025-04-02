@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: url('/generalbackgorund.png') no-repeat center center/cover;
+  font-family: Arial, sans-serif;
+  color: white;
+}
